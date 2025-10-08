@@ -4,11 +4,11 @@ class ClipboardHistory:
     def __init__(self, max_items=3):
         self.max_items = max_items
         self.history = deque(maxlen=max_items)
-        self.current_index = -1  # -1 means no active item
+        self.current_index = -1 
 
     def add_item(self, text: str):
         if not text or (self.history and text == self.history[-1]):
-            return  # avoid duplicates if same as last copy
+            return
         self.history.append(text)
         self.current_index = len(self.history) - 1
 

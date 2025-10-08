@@ -94,11 +94,9 @@ def main():
     if IS_MAC:
         print("   macOS note: grant Accessibility permission to Python for hotkeys to work.")
 
-    # Start watcher and hotkey listener in threads
     stop_event = threading.Event()
     threading.Thread(target=clipboard_watcher, args=(stop_event,), daemon=True).start()
 
-    # Global hotkeys thread
     def hotkey_listener():
         with keyboard.GlobalHotKeys({
             HOTKEY_CYCLE: on_cycle,
@@ -108,11 +106,10 @@ def main():
 
     threading.Thread(target=hotkey_listener, daemon=True).start()
 
-    # --- Run GUI on MAIN THREAD ---
     global gui
     gui = ClipboardGUI(history)
     try:
-        gui.run()  # this call blocks and safely owns the Tk event loop
+        gui.run()  
     except KeyboardInterrupt:
         pass
     finally:
